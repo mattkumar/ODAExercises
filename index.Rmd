@@ -1,0 +1,169 @@
+---
+title: "Data Manipulation Exercises"
+subtitle: "ODA R Learning Series"
+author: "Matthew Kumar"
+date: "Dec 4, 2020"
+output:
+  rmdformats::downcute:
+    self_contained: true
+
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(rmdformats)
+library(klippy)
+
+## Global options
+
+opts_knit$set(width=75)
+```
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy(position = c('top', 'right'), color = 'darkred')
+```
+
+# Prerequisites
+
+## Reference
+
+You may access the presentation on Data Manipulation [here](https://r4oda.netlify.app/). 
+
+The R-Studio dplyr cheat sheet can be viewed [here](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf). 
+
+## Install tidyverse
+
+You can install the tidyverse packages at the R Studio prompt. Once installed, you will need to load the packages into your session.
+
+```{r, eval=F}
+install.packages("tidyverse")
+library(tidyverse)
+```
+
+## Datasets 
+
+For the exercises that follow, the data sets are included in this document. You just need to copy and paste the code (use the <span style="color:darkred">copy button</span> located in the top-right of the code block) at the R Studio prompt and the data will be created in your session.
+<br>
+<br>
+
+# Exercises
+
+## 1. Pipe Operator
+
+We briefly discussed the pipe operator, `%>%`,  in the presentation. 
+
+1. What are some of the benefits of using it in your day to day work? 
+
+2. Can you describe a scenario where it might *not* be immediately useful?
+
+If you're interested in learning about different types of pipes, have a look [here.](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)
+
+<br>
+<br>
+
+## 2. Data Manipulation
+
+## 2.1 Dataset 1
+
+To complete the following exercises, you will need to copy and paste the code below into your R Studio session. This should create a data frame named `adsl` in your environment. Please verify this before moving on.
+
+```{r, eval=F}
+set.seed(808)
+
+adsl <- data.frame(SUBJIDN  = 1:200,
+                   SEX      = sample(c('M','F', NA), 200, replace = T, prob = c(.8,.15,.05)),
+                   AGE      = runif(200, min=18, max=65) %>% round(),
+                   TRTP     = sample(c('DRUG','PLACEBO'), 200, replace = T),
+                   SAFFL    = sample(c('Y','N', NA), 200, replace = T, prob = c(.9,.025,.025)),
+                   COUNTRY  = sample(c('USA','INDIA','EU','CHINA'), 200, replace = T),
+                   stringsAsFactors = F)
+                   
+```
+
+## 2.2 Dataset 1 Exercises
+
+1. Examine the structure of the code used to create `adsl`. In R, it's useful to be able to simulate data on the fly in order to test a new package or function. Can you describe, in words, how AGE and TRTP are simulated? Typing `?runif` and `?sample` at the prompt can be useful.
+<br>
+<br>
+2. Write a `select` query that chooses all columns in `adsl` that start with S **or** end with Y.
+<br>
+<br>
+3. Use `adsl` to create a new data frame that consists of **numeric** variables only.
+<br>
+<br>
+4. The `count()` function in dplyr is useful for creating frequencies. Type `?count` at the prompt to read about it. Apply it to `adsl` to answer to the following:
+
+- Compute individual frequencies for the COUNTRY and SEX variables.
+
+- Compute a cross-tabulation for COUNTRY and SEX while removing any rows where COUNTRY or SEX are `NA`. 
+<br>
+<br>
+5. Compute the frequency of SAFFL and request that frequencies are sorted from highest to lowest.
+
+- There's been no mention of percentages till now. How might you add the relative percentages with your frequencies for SAFFL? 
+  
+- **HINT**: The `prop.table()` function might be useful in creating this.
+<br> 
+<br>
+
+## 2.3 Dataset 2 
+
+To complete the following exercises, you will need to copy and paste the code below into your R Studio session. This should create a data frame named `visits` in your environment. Please verify this before moving on.
+
+```{r, eval=F}
+set.seed(808)
+
+visits <- data.frame(SUBJIDN   = sample(1:10, 30, replace = T),
+                     VISITDT   = Sys.Date() + runif(30, min=-365, max=0))
+
+```
+
+## 2. 4 Dataset 2 Exercises
+
+1. What is the maximum number of visits across all subjects?
+<br>
+<br>
+2. What is the earliest visit date across all subjects?
+<br>
+<br>
+3. What is the latest visit date across all subjects?
+<br>
+<br>
+4. Create a data frame that keeps the earliest visit *per subject* 
+<br>
+<br>
+5. Create a new column that represents the number of days between `2021-01-01` and the earliest visit date *per subject*.
+- **HINT**: You can freely reference 2020-01-01 as a date constant like so: `as.Date('2020-01-01')`.
+
+## 3. Data Tidying
+
+## 3.1 Dataset 3
+
+To complete the following exercises, you will need to copy and paste the code below into your R Studio session. This should create a data frame named `adae` in your environment. Please verify this before moving on.
+
+```{r, eval=F}
+set.seed(808)
+
+adae <- data.frame(SUBJIDN = 1:5,
+                   AEACN_SUMMARY = c('DOSE MODIFIED;;DOSE NOT CHANGED;',
+                                     "DOSE REDUCED;DOSE REDUCED;DRUG WITHDRAWN;",
+                                     "NOT APPLICABLE;DOSE REDUCED;;",
+                                     ";;;",
+                                     "DRUG WITHDRAWN;;;"),
+                   stringsAsFactors = FALSE)
+```
+
+## 3.2 Dataset 3 Exercises
+1. AEACN_SUMMARY is a concatenated version of the original variables AEACN1, AEACN2, AEACN3. Re-create these variables using functions from the `tidyr` package. Your result data frame should have a total of 4 columns.
+<br>
+<br>
+2. The `paste` and `paste0` function can be used to concatenate columns. 
+	- How are these functions different ? 
+<br>
+	- Use `paste0` and the result of Q1 to create a new concatenated column named `AEACN_SUMMARY2`. Use `-` as a delimiter instead of `;`.
+<br>
+<br>
+3. Filter the data frame you created in Q1 to keep subjects who eventually had the `DRUG WITHDRAWN` 
+<br>
+<br>
+4. Reshape the data frame you created in Q1 into long format.
