@@ -98,11 +98,10 @@ adsl <- data.frame(SUBJIDN  = 1:200,
 - Compute a cross-tabulation for COUNTRY and SEX while removing any rows where COUNTRY or SEX are `NA`. 
 <br>
 <br>
-5. Compute the frequency of SAFFL and request that frequencies are sorted from highest to lowest.
-
-- There's been no mention of percentages till now. How might you add the relative percentages with your frequencies for SAFFL? 
-  
-- **HINT**: The `prop.table()` function might be useful in creating this.
+5. Compute the frequency of SAFFL.
+- Request that frequencies are sorted from highest to lowest.
+<br>
+- How might you add the percentages with your frequencies for SAFFL? Ensure your final answer is multiplied by 100 and rounded to two decimal places.
 <br> 
 <br>
 
