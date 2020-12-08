@@ -2013,7 +2013,7 @@ library(tidyverse)</code></pre>
 <div id="dataset-1" class="section level2">
 <h2>2.1 Dataset 1</h2>
 <p>To complete the following exercises, you will need to copy and paste the code below into your R Studio session. This should create a data frame named <code>adsl</code> in your environment. Please verify this before moving on.</p>
-<pre class="r"><code>set.seed(808)
+<pre class="r"><code>set.seed(8083)
 
 adsl &lt;- data.frame(SUBJIDN  = 1:200,
                    SEX      = sample(c(&#39;M&#39;,&#39;F&#39;, NA), 200, replace = T, prob = c(.8,.15,.05)),
@@ -2026,7 +2026,7 @@ adsl &lt;- data.frame(SUBJIDN  = 1:200,
 <div id="dataset-1-exercises" class="section level2">
 <h2>2.2 Dataset 1 Exercises</h2>
 <ol style="list-style-type: decimal">
-<li>Examine the structure of the code used to create <code>adsl</code>. In R, it’s useful to be able to simulate data on the fly in order to test a new package or function. Can you describe, in words, how AGE and TRTP are simulated? Typing <code>?runif</code> and <code>?sample</code> at the prompt can be useful. <br> <br></li>
+<li>Examine the structure of the code used to create <code>adsl</code>. In R, it’s useful to be able to simulate data on the fly in order to test a new package or function. Can you describe, in words, how AGE and SAFFL are simulated? Type <code>?runif</code> and <code>?sample</code> at the prompt to learn about these function arguments. <br> <br></li>
 <li>Write a <code>select</code> query that chooses all columns in <code>adsl</code> that start with S <strong>or</strong> end with Y. <br> <br></li>
 <li>Use <code>adsl</code> to create a new data frame that consists of <strong>numeric</strong> variables only. <br> <br></li>
 <li>The <code>count()</code> function in dplyr is useful for creating frequencies. Type <code>?count</code> at the prompt to read about it. Apply it to <code>adsl</code> to answer to the following:</li>
@@ -2046,10 +2046,10 @@ adsl &lt;- data.frame(SUBJIDN  = 1:200,
 <div id="dataset-2" class="section level2">
 <h2>2.3 Dataset 2</h2>
 <p>To complete the following exercises, you will need to copy and paste the code below into your R Studio session. This should create a data frame named <code>visits</code> in your environment. Please verify this before moving on.</p>
-<pre class="r"><code>set.seed(808)
+<pre class="r"><code>set.seed(8083)
 
-visits &lt;- data.frame(SUBJIDN   = sample(1:10, 30, replace = T),
-                     VISITDT   = Sys.Date() + runif(30, min=-365, max=0))</code></pre>
+visits &lt;- data.frame(SUBJIDN   = sample(1:10, 40, replace = T),
+                     VISITDT   = Sys.Date() + runif(40, min=-365, max=0))</code></pre>
 </div>
 <div id="dataset-2-exercises" class="section level2">
 <h2>2. 4 Dataset 2 Exercises</h2>
@@ -2057,7 +2057,13 @@ visits &lt;- data.frame(SUBJIDN   = sample(1:10, 30, replace = T),
 <li>What is the maximum number of visits across all subjects? <br> <br></li>
 <li>What is the earliest visit date across all subjects? <br> <br></li>
 <li>What is the latest visit date across all subjects? <br> <br></li>
-<li>Create a data frame that keeps the earliest visit <em>per subject</em> <br> <br></li>
+<li>Create a data frame that keeps the earliest visit <em>per subject</em> Do this two ways: <br></li>
+</ol>
+<ul>
+<li>Use a combination of <code>arrange</code> and <code>distinct</code> <br></li>
+<li>Use the <code>slice</code> function. Type <code>?slice</code> to first learn about it. <br></li>
+</ul>
+<ol start="5" style="list-style-type: decimal">
 <li>Create a new column that represents the number of days between <code>2021-01-01</code> and the earliest visit date <em>per subject</em>.</li>
 </ol>
 <ul>
@@ -2070,7 +2076,7 @@ visits &lt;- data.frame(SUBJIDN   = sample(1:10, 30, replace = T),
 <div id="dataset-3" class="section level2">
 <h2>3.1 Dataset 3</h2>
 <p>To complete the following exercises, you will need to copy and paste the code below into your R Studio session. This should create a data frame named <code>adae</code> in your environment. Please verify this before moving on.</p>
-<pre class="r"><code>set.seed(808)
+<pre class="r"><code>set.seed(8083)
 
 adae &lt;- data.frame(SUBJIDN = 1:5,
                    AEACN_SUMMARY = c(&#39;DOSE MODIFIED;;DOSE NOT CHANGED;&#39;,
@@ -2084,11 +2090,7 @@ adae &lt;- data.frame(SUBJIDN = 1:5,
 <h2>3.2 Dataset 3 Exercises</h2>
 <ol style="list-style-type: decimal">
 <li>AEACN_SUMMARY is a concatenated version of the original variables AEACN1, AEACN2, AEACN3. Re-create these variables using functions from the <code>tidyr</code> package. Your result data frame should have a total of 4 columns. <br> <br></li>
-<li>The <code>paste</code> and <code>paste0</code> function can be used to concatenate columns.
-<ul>
-<li>How are these functions different ? <br></li>
-<li>Use <code>paste0</code> and the result of Q1 to create a new concatenated column named <code>AEACN_SUMMARY2</code>. Use <code>-</code> as a delimiter instead of <code>;</code>. <br> <br></li>
-</ul></li>
+<li>Use <code>paste()</code> and the result of Q1 to create a new concatenated column named <code>AEACN_SUMMARY2</code>. Use <code>-</code> as a delimiter instead of <code>;</code>. <br> <br></li>
 <li>Filter the data frame you created in Q1 to keep subjects who eventually had the <code>DRUG WITHDRAWN</code> <br> <br></li>
 <li>Reshape the data frame you created in Q1 into long format.</li>
 </ol>

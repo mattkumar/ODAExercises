@@ -68,7 +68,7 @@ If you're interested in learning about different types of pipes, have a look [he
 To complete the following exercises, you will need to copy and paste the code below into your R Studio session. This should create a data frame named `adsl` in your environment. Please verify this before moving on.
 
 ```{r, eval=F}
-set.seed(808)
+set.seed(8083)
 
 adsl <- data.frame(SUBJIDN  = 1:200,
                    SEX      = sample(c('M','F', NA), 200, replace = T, prob = c(.8,.15,.05)),
@@ -82,7 +82,7 @@ adsl <- data.frame(SUBJIDN  = 1:200,
 
 ## 2.2 Dataset 1 Exercises
 
-1. Examine the structure of the code used to create `adsl`. In R, it's useful to be able to simulate data on the fly in order to test a new package or function. Can you describe, in words, how AGE and TRTP are simulated? Typing `?runif` and `?sample` at the prompt can be useful.
+1. Examine the structure of the code used to create `adsl`. In R, it's useful to be able to simulate data on the fly in order to test a new package or function. Can you describe, in words, how AGE and SAFFL are simulated? Type `?runif` and `?sample` at the prompt to learn about these function arguments.
 <br>
 <br>
 2. Write a `select` query that chooses all columns in `adsl` that start with S **or** end with Y.
@@ -111,10 +111,10 @@ adsl <- data.frame(SUBJIDN  = 1:200,
 To complete the following exercises, you will need to copy and paste the code below into your R Studio session. This should create a data frame named `visits` in your environment. Please verify this before moving on.
 
 ```{r, eval=F}
-set.seed(808)
+set.seed(8083)
 
-visits <- data.frame(SUBJIDN   = sample(1:10, 30, replace = T),
-                     VISITDT   = Sys.Date() + runif(30, min=-365, max=0))
+visits <- data.frame(SUBJIDN   = sample(1:10, 40, replace = T),
+                     VISITDT   = Sys.Date() + runif(40, min=-365, max=0))
 
 ```
 
@@ -129,11 +129,14 @@ visits <- data.frame(SUBJIDN   = sample(1:10, 30, replace = T),
 3. What is the latest visit date across all subjects?
 <br>
 <br>
-4. Create a data frame that keeps the earliest visit *per subject* 
+4. Create a data frame that keeps the earliest visit *per subject* Do this two ways:
 <br>
+- Use a combination of `arrange` and `distinct`
+<br>
+- Use the `slice` function. Type `?slice` to first learn about it.
 <br>
 5. Create a new column that represents the number of days between `2021-01-01` and the earliest visit date *per subject*.
-- **HINT**: You can freely reference 2020-01-01 as a date constant like so: `as.Date('2020-01-01')`.
+- **HINT**: You can freely reference 2020-01-01 as a date constant like so: `as.Date('2020-01-01')`. 
 
 ## 3. Data Tidying
 
@@ -142,7 +145,7 @@ visits <- data.frame(SUBJIDN   = sample(1:10, 30, replace = T),
 To complete the following exercises, you will need to copy and paste the code below into your R Studio session. This should create a data frame named `adae` in your environment. Please verify this before moving on.
 
 ```{r, eval=F}
-set.seed(808)
+set.seed(8083)
 
 adae <- data.frame(SUBJIDN = 1:5,
                    AEACN_SUMMARY = c('DOSE MODIFIED;;DOSE NOT CHANGED;',
@@ -157,10 +160,7 @@ adae <- data.frame(SUBJIDN = 1:5,
 1. AEACN_SUMMARY is a concatenated version of the original variables AEACN1, AEACN2, AEACN3. Re-create these variables using functions from the `tidyr` package. Your result data frame should have a total of 4 columns.
 <br>
 <br>
-2. The `paste` and `paste0` function can be used to concatenate columns. 
-	- How are these functions different ? 
-<br>
-	- Use `paste0` and the result of Q1 to create a new concatenated column named `AEACN_SUMMARY2`. Use `-` as a delimiter instead of `;`.
+2. Use `paste()` and the result of Q1 to create a new concatenated column named `AEACN_SUMMARY2`. Use `-` as a delimiter instead of `;`.
 <br>
 <br>
 3. Filter the data frame you created in Q1 to keep subjects who eventually had the `DRUG WITHDRAWN` 
