@@ -14,6 +14,7 @@ output:
 library(knitr)
 library(rmdformats)
 library(klippy)
+library(tidyverse)
 
 ## Global options
 
@@ -31,20 +32,6 @@ You may access the presentation on Data Manipulation [here](https://r4oda.netlif
 
 The R-Studio dplyr cheat sheet can be viewed [here](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf). 
 
-## Install tidyverse
-
-You can install the tidyverse packages at the R Studio prompt. Once installed, you will need to load the packages into your session.
-
-```{r, eval=F}
-install.packages("tidyverse")
-library(tidyverse)
-```
-
-## Datasets 
-
-For the exercises that follow, the data sets are included in this document. You just need to copy and paste the code (use the <span style="color:darkred">copy button</span> located in the top-right of the code block) at the R Studio prompt and the data will be created in your session.
-<br>
-<br>
 
 # Exercises
 
@@ -54,7 +41,19 @@ We briefly discussed the pipe operator, `%>%`,  in the presentation.
 
 1. What are some of the benefits of using it in your day to day work? 
 
+<details>
+<summary>Click for Answer</summary>
+- Write code in a series of natural, ordered steps
+- Easy to digest and reason about others code
+- Neat and compact (opinion)
+</details> 
+
 2. Can you describe a scenario where it might *not* be immediately useful?
+
+<details>
+  <summary>Click for Answer</summary>
+ - If you're workflow is non-linear (i.e. multi directional). 
+</details> 
 
 If you're interested in learning about different types of pipes, have a look [here.](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)
 
@@ -74,7 +73,7 @@ adsl <- data.frame(SUBJIDN  = 1:200,
                    SEX      = sample(c('M','F', NA), 200, replace = T, prob = c(.8,.15,.05)),
                    AGE      = runif(200, min=18, max=65) %>% round(),
                    TRTP     = sample(c('DRUG','PLACEBO'), 200, replace = T),
-                   SAFFL    = sample(c('Y','N', NA), 200, replace = T, prob = c(.9,.025,.025)),
+                   SAFFL    = sample(c('Y','N', NA), 200, replace = T, prob = c(.9,.07,.03)),
                    COUNTRY  = sample(c('USA','INDIA','EU','CHINA'), 200, replace = T),
                    stringsAsFactors = F)
                    
@@ -82,7 +81,7 @@ adsl <- data.frame(SUBJIDN  = 1:200,
 
 ## 2.2 Dataset 1 Exercises
 
-1. Examine the structure of the code used to create `adsl`. In R, it's useful to be able to simulate data on the fly in order to test a new package or function. Can you describe, in words, how AGE and SAFFL are simulated? Type `?runif` and `?sample` at the prompt to learn about these function arguments.
+1. Examine the structure of the code used to create `adsl`. In R, it's useful to be able to simulate data on the fly in order to test a new package or function. Type `?runif` and `?sample` at the prompt to learn about these function arguments. Can you describe, in words, how AGE and SAFFL are simulated?
 <br>
 <br>
 2. Write a `select` query that chooses all columns in `adsl` that start with S **or** end with Y.
@@ -101,7 +100,7 @@ adsl <- data.frame(SUBJIDN  = 1:200,
 5. Compute the frequency of SAFFL.
 - Request that frequencies are sorted from highest to lowest.
 <br>
-- How might you add the percentages with your frequencies for SAFFL? Ensure your final answer is multiplied by 100 and rounded to two decimal places.
+- How might you add the percentages with your frequencies for SAFFL? Ensure your final answer is multiplied by 100.
 <br> 
 <br>
 
@@ -112,8 +111,8 @@ To complete the following exercises, you will need to copy and paste the code be
 ```{r, eval=F}
 set.seed(8083)
 
-visits <- data.frame(SUBJIDN   = sample(1:10, 40, replace = T),
-                     VISITDT   = Sys.Date() + runif(40, min=-365, max=0))
+visits <- data.frame(SUBJIDN   = sample(1:10, 30, replace = T),
+                     VISITDT   = Sys.Date() + runif(30, min=-365, max=0))
 
 ```
 
@@ -135,7 +134,7 @@ visits <- data.frame(SUBJIDN   = sample(1:10, 40, replace = T),
 - Use the `slice` function. Type `?slice` to first learn about it.
 <br>
 5. Create a new column that represents the number of days between `2021-01-01` and the earliest visit date *per subject*.
-- **HINT**: You can freely reference 2020-01-01 as a date constant like so: `as.Date('2020-01-01')`. 
+- **HINT**: You can freely reference 2021-01-01 as a date constant like so: `as.Date('2021-01-01')`. 
 
 ## 3. Data Tidying
 
@@ -143,7 +142,7 @@ visits <- data.frame(SUBJIDN   = sample(1:10, 40, replace = T),
 
 To complete the following exercises, you will need to copy and paste the code below into your R Studio session. This should create a data frame named `adae` in your environment. Please verify this before moving on.
 
-```{r, eval=F}
+```{r, eval=T}
 set.seed(8083)
 
 adae <- data.frame(SUBJIDN = 1:5,
@@ -158,6 +157,24 @@ adae <- data.frame(SUBJIDN = 1:5,
 ## 3.2 Dataset 3 Exercises
 1. AEACN_SUMMARY is a concatenated version of the original variables AEACN1, AEACN2, AEACN3. Re-create these variables using functions from the `tidyr` package. Your result data frame should have a total of 4 columns.
 <br>
+<details>
+  <summary>Solution</summary>
+```{r, eval=FALSE}
+library(tidyverse)
+
+adae_q1 <- adae %>%
+             separate(AEACN_SUMMARY,
+                      into = c('AEACN1','AEACN2','AEACN3'),
+                      sep = ';')
+```
+
+```{r, echo=FALSE, eval=TRUE}
+adae_q1 <- adae %>%
+             separate(AEACN_SUMMARY,
+                      into = c('AEACN1','AEACN2','AEACN3'),
+                      sep = ';')
+```
+</details> 
 <br>
 2. Use `paste()` and the result of Q1 to create a new concatenated column named `AEACN_SUMMARY2`. Use `-` as a delimiter instead of `;`.
 <br>
@@ -166,3 +183,4 @@ adae <- data.frame(SUBJIDN = 1:5,
 <br>
 <br>
 4. Reshape the data frame you created in Q1 into long format.
+

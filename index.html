@@ -1937,8 +1937,6 @@ margin-right: 4.5px; } }
             <ul>
             <li><a href="#prerequisites">Prerequisites</a><ul>
             <li><a href="#reference">Reference</a></li>
-            <li><a href="#install-tidyverse">Install tidyverse</a></li>
-            <li><a href="#datasets">Datasets</a></li>
             </ul></li>
             <li><a href="#exercises">Exercises</a><ul>
             <li><a href="#pipe-operator">1. Pipe Operator</a></li>
@@ -1984,16 +1982,6 @@ margin-right: 4.5px; } }
 <p>You may access the presentation on Data Manipulation <a href="https://r4oda.netlify.app/">here</a>.</p>
 <p>The R-Studio dplyr cheat sheet can be viewed <a href="https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf">here</a>.</p>
 </div>
-<div id="install-tidyverse" class="section level2">
-<h2>Install tidyverse</h2>
-<p>You can install the tidyverse packages at the R Studio prompt. Once installed, you will need to load the packages into your session.</p>
-<pre class="r"><code>install.packages(&quot;tidyverse&quot;)
-library(tidyverse)</code></pre>
-</div>
-<div id="datasets" class="section level2">
-<h2>Datasets</h2>
-<p>For the exercises that follow, the data sets are included in this document. You just need to copy and paste the code (use the <span style="color:darkred">copy button</span> located in the top-right of the code block) at the R Studio prompt and the data will be created in your session. <br> <br></p>
-</div>
 </div>
 <div id="exercises" class="section level1">
 <h1>Exercises</h1>
@@ -2001,9 +1989,17 @@ library(tidyverse)</code></pre>
 <h2>1. Pipe Operator</h2>
 <p>We briefly discussed the pipe operator, <code>%&gt;%</code>, in the presentation.</p>
 <ol style="list-style-type: decimal">
-<li><p>What are some of the benefits of using it in your day to day work?</p></li>
-<li><p>Can you describe a scenario where it might <em>not</em> be immediately useful?</p></li>
+<li>What are some of the benefits of using it in your day to day work?</li>
 </ol>
+<details>
+<summary>Click for Answer</summary> - Write code in a series of natural, ordered steps - Easy to digest and reason about others code - Neat and compact (opinion)
+</details>
+<ol start="2" style="list-style-type: decimal">
+<li>Can you describe a scenario where it might <em>not</em> be immediately useful?</li>
+</ol>
+<details>
+<summary>Click for Answer</summary> - If you’re workflow is non-linear (i.e. multi directional).
+</details>
 <p>If you’re interested in learning about different types of pipes, have a look <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html">here.</a></p>
 <p><br> <br></p>
 </div>
@@ -2019,14 +2015,14 @@ adsl &lt;- data.frame(SUBJIDN  = 1:200,
                    SEX      = sample(c(&#39;M&#39;,&#39;F&#39;, NA), 200, replace = T, prob = c(.8,.15,.05)),
                    AGE      = runif(200, min=18, max=65) %&gt;% round(),
                    TRTP     = sample(c(&#39;DRUG&#39;,&#39;PLACEBO&#39;), 200, replace = T),
-                   SAFFL    = sample(c(&#39;Y&#39;,&#39;N&#39;, NA), 200, replace = T, prob = c(.9,.025,.025)),
+                   SAFFL    = sample(c(&#39;Y&#39;,&#39;N&#39;, NA), 200, replace = T, prob = c(.9,.07,.03)),
                    COUNTRY  = sample(c(&#39;USA&#39;,&#39;INDIA&#39;,&#39;EU&#39;,&#39;CHINA&#39;), 200, replace = T),
                    stringsAsFactors = F)</code></pre>
 </div>
 <div id="dataset-1-exercises" class="section level2">
 <h2>2.2 Dataset 1 Exercises</h2>
 <ol style="list-style-type: decimal">
-<li>Examine the structure of the code used to create <code>adsl</code>. In R, it’s useful to be able to simulate data on the fly in order to test a new package or function. Can you describe, in words, how AGE and SAFFL are simulated? Type <code>?runif</code> and <code>?sample</code> at the prompt to learn about these function arguments. <br> <br></li>
+<li>Examine the structure of the code used to create <code>adsl</code>. In R, it’s useful to be able to simulate data on the fly in order to test a new package or function. Type <code>?runif</code> and <code>?sample</code> at the prompt to learn about these function arguments. Can you describe, in words, how AGE and SAFFL are simulated? <br> <br></li>
 <li>Write a <code>select</code> query that chooses all columns in <code>adsl</code> that start with S <strong>or</strong> end with Y. <br> <br></li>
 <li>Use <code>adsl</code> to create a new data frame that consists of <strong>numeric</strong> variables only. <br> <br></li>
 <li>The <code>count()</code> function in dplyr is useful for creating frequencies. Type <code>?count</code> at the prompt to read about it. Apply it to <code>adsl</code> to answer to the following:</li>
@@ -2040,7 +2036,7 @@ adsl &lt;- data.frame(SUBJIDN  = 1:200,
 </ol>
 <ul>
 <li>Request that frequencies are sorted from highest to lowest. <br></li>
-<li>How might you add the percentages with your frequencies for SAFFL? Ensure your final answer is multiplied by 100 and rounded to two decimal places. <br> <br></li>
+<li>How might you add the percentages with your frequencies for SAFFL? Ensure your final answer is multiplied by 100. <br> <br></li>
 </ul>
 </div>
 <div id="dataset-2" class="section level2">
@@ -2048,8 +2044,8 @@ adsl &lt;- data.frame(SUBJIDN  = 1:200,
 <p>To complete the following exercises, you will need to copy and paste the code below into your R Studio session. This should create a data frame named <code>visits</code> in your environment. Please verify this before moving on.</p>
 <pre class="r"><code>set.seed(8083)
 
-visits &lt;- data.frame(SUBJIDN   = sample(1:10, 40, replace = T),
-                     VISITDT   = Sys.Date() + runif(40, min=-365, max=0))</code></pre>
+visits &lt;- data.frame(SUBJIDN   = sample(1:10, 30, replace = T),
+                     VISITDT   = Sys.Date() + runif(30, min=-365, max=0))</code></pre>
 </div>
 <div id="dataset-2-exercises" class="section level2">
 <h2>2. 4 Dataset 2 Exercises</h2>
@@ -2067,7 +2063,7 @@ visits &lt;- data.frame(SUBJIDN   = sample(1:10, 40, replace = T),
 <li>Create a new column that represents the number of days between <code>2021-01-01</code> and the earliest visit date <em>per subject</em>.</li>
 </ol>
 <ul>
-<li><strong>HINT</strong>: You can freely reference 2020-01-01 as a date constant like so: <code>as.Date(&#39;2020-01-01&#39;)</code>.</li>
+<li><strong>HINT</strong>: You can freely reference 2021-01-01 as a date constant like so: <code>as.Date(&#39;2021-01-01&#39;)</code>.</li>
 </ul>
 </div>
 <div id="data-tidying" class="section level2">
@@ -2089,11 +2085,20 @@ adae &lt;- data.frame(SUBJIDN = 1:5,
 <div id="dataset-3-exercises" class="section level2">
 <h2>3.2 Dataset 3 Exercises</h2>
 <ol style="list-style-type: decimal">
-<li>AEACN_SUMMARY is a concatenated version of the original variables AEACN1, AEACN2, AEACN3. Re-create these variables using functions from the <code>tidyr</code> package. Your result data frame should have a total of 4 columns. <br> <br></li>
-<li>Use <code>paste()</code> and the result of Q1 to create a new concatenated column named <code>AEACN_SUMMARY2</code>. Use <code>-</code> as a delimiter instead of <code>;</code>. <br> <br></li>
-<li>Filter the data frame you created in Q1 to keep subjects who eventually had the <code>DRUG WITHDRAWN</code> <br> <br></li>
-<li>Reshape the data frame you created in Q1 into long format.</li>
+<li>AEACN_SUMMARY is a concatenated version of the original variables AEACN1, AEACN2, AEACN3. Re-create these variables using functions from the <code>tidyr</code> package. Your result data frame should have a total of 4 columns. <br>
+<details>
+<summary>Solution</summary></li>
 </ol>
+<pre class="r"><code>library(tidyverse)
+
+adae_q1 &lt;- adae %&gt;%
+             separate(AEACN_SUMMARY,
+                      into = c(&#39;AEACN1&#39;,&#39;AEACN2&#39;,&#39;AEACN3&#39;),
+                      sep = &#39;;&#39;)</code></pre>
+<pre><code>## Warning: Expected 3 pieces. Additional pieces discarded in 5 rows [1, 2, 3, 4,
+## 5].</code></pre>
+</details>
+<p><br> 2. Use <code>paste()</code> and the result of Q1 to create a new concatenated column named <code>AEACN_SUMMARY2</code>. Use <code>-</code> as a delimiter instead of <code>;</code>. <br> <br> 3. Filter the data frame you created in Q1 to keep subjects who eventually had the <code>DRUG WITHDRAWN</code> <br> <br> 4. Reshape the data frame you created in Q1 into long format.</p>
 </div>
 </div>
 </div>
