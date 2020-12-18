@@ -41,19 +41,7 @@ We briefly discussed the pipe operator, `%>%`,  in the presentation.
 
 1. What are some of the benefits of using it in your day to day work? 
 
-<details>
-<summary>Click for Answer</summary>
-- Write code in a series of natural, ordered steps
-- Easy to digest and reason about others code
-- Neat and compact (opinion)
-</details> 
-
 2. Can you describe a scenario where it might *not* be immediately useful?
-
-<details>
-  <summary>Click for Answer</summary>
- - If you're workflow is non-linear (i.e. multi directional). 
-</details> 
 
 If you're interested in learning about different types of pipes, have a look [here.](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)
 
@@ -157,24 +145,6 @@ adae <- data.frame(SUBJIDN = 1:5,
 ## 3.2 Dataset 3 Exercises
 1. AEACN_SUMMARY is a concatenated version of the original variables AEACN1, AEACN2, AEACN3. Re-create these variables using functions from the `tidyr` package. Your result data frame should have a total of 4 columns.
 <br>
-<details>
-  <summary>Solution</summary>
-```{r, eval=FALSE}
-library(tidyverse)
-
-adae_q1 <- adae %>%
-             separate(AEACN_SUMMARY,
-                      into = c('AEACN1','AEACN2','AEACN3'),
-                      sep = ';')
-```
-
-```{r, echo=FALSE, eval=TRUE}
-adae_q1 <- adae %>%
-             separate(AEACN_SUMMARY,
-                      into = c('AEACN1','AEACN2','AEACN3'),
-                      sep = ';')
-```
-</details> 
 <br>
 2. Use `paste()` and the result of Q1 to create a new concatenated column named `AEACN_SUMMARY2`. Use `-` as a delimiter instead of `;`.
 <br>

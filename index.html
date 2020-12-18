@@ -1989,17 +1989,9 @@ margin-right: 4.5px; } }
 <h2>1. Pipe Operator</h2>
 <p>We briefly discussed the pipe operator, <code>%&gt;%</code>, in the presentation.</p>
 <ol style="list-style-type: decimal">
-<li>What are some of the benefits of using it in your day to day work?</li>
+<li><p>What are some of the benefits of using it in your day to day work?</p></li>
+<li><p>Can you describe a scenario where it might <em>not</em> be immediately useful?</p></li>
 </ol>
-<details>
-<summary>Click for Answer</summary> - Write code in a series of natural, ordered steps - Easy to digest and reason about others code - Neat and compact (opinion)
-</details>
-<ol start="2" style="list-style-type: decimal">
-<li>Can you describe a scenario where it might <em>not</em> be immediately useful?</li>
-</ol>
-<details>
-<summary>Click for Answer</summary> - If you’re workflow is non-linear (i.e. multi directional).
-</details>
 <p>If you’re interested in learning about different types of pipes, have a look <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html">here.</a></p>
 <p><br> <br></p>
 </div>
@@ -2085,20 +2077,11 @@ adae &lt;- data.frame(SUBJIDN = 1:5,
 <div id="dataset-3-exercises" class="section level2">
 <h2>3.2 Dataset 3 Exercises</h2>
 <ol style="list-style-type: decimal">
-<li>AEACN_SUMMARY is a concatenated version of the original variables AEACN1, AEACN2, AEACN3. Re-create these variables using functions from the <code>tidyr</code> package. Your result data frame should have a total of 4 columns. <br>
-<details>
-<summary>Solution</summary></li>
+<li>AEACN_SUMMARY is a concatenated version of the original variables AEACN1, AEACN2, AEACN3. Re-create these variables using functions from the <code>tidyr</code> package. Your result data frame should have a total of 4 columns. <br> <br></li>
+<li>Use <code>paste()</code> and the result of Q1 to create a new concatenated column named <code>AEACN_SUMMARY2</code>. Use <code>-</code> as a delimiter instead of <code>;</code>. <br> <br></li>
+<li>Filter the data frame you created in Q1 to keep subjects who eventually had the <code>DRUG WITHDRAWN</code> <br> <br></li>
+<li>Reshape the data frame you created in Q1 into long format.</li>
 </ol>
-<pre class="r"><code>library(tidyverse)
-
-adae_q1 &lt;- adae %&gt;%
-             separate(AEACN_SUMMARY,
-                      into = c(&#39;AEACN1&#39;,&#39;AEACN2&#39;,&#39;AEACN3&#39;),
-                      sep = &#39;;&#39;)</code></pre>
-<pre><code>## Warning: Expected 3 pieces. Additional pieces discarded in 5 rows [1, 2, 3, 4,
-## 5].</code></pre>
-</details>
-<p><br> 2. Use <code>paste()</code> and the result of Q1 to create a new concatenated column named <code>AEACN_SUMMARY2</code>. Use <code>-</code> as a delimiter instead of <code>;</code>. <br> <br> 3. Filter the data frame you created in Q1 to keep subjects who eventually had the <code>DRUG WITHDRAWN</code> <br> <br> 4. Reshape the data frame you created in Q1 into long format.</p>
 </div>
 </div>
 </div>
